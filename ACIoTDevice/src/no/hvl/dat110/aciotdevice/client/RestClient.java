@@ -23,7 +23,6 @@ public class RestClient {
 
 		// TODO: implement a HTTP POST on the service to post the message
 
-		
 		//første test med OkHTTP
 		OkHttpClient okClient = new OkHttpClient();
 		Gson gson = new Gson();
