@@ -24,7 +24,7 @@ public class RestClient {
 		// TODO: implement a HTTP POST on the service to post the message
 
 		//første test med OkHTTP
-		OkHttpClient okClient = new OkHttpClient();
+		OkHttpClient OkHttpClient = new OkHttpClient();
 		Gson gson = new Gson();
 		AccessMessage msg = new AccessMessage(message);
 
@@ -36,7 +36,7 @@ public class RestClient {
 				.post(reqBody)
 				.build();
 
-		try (Response response = okClient.newCall(request).execute()) {
+		try (Response response = OkHttpClient.newCall(request).execute()) {
 			System.out.println(response.body().string());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -56,7 +56,7 @@ public class RestClient {
 //		immediately before checking whether a provided access code is valid, i.e., in state CHECKING.
 		//TEST 1
 		
-		OkHttpClient okClient = new OkHttpClient();
+		OkHttpClient OkHttpClient = new OkHttpClient();
 		Gson gson = new Gson();
 
 		Request request = new Request.Builder()
@@ -65,7 +65,7 @@ public class RestClient {
 				.build();
 
 
-		try (Response response = okClient.newCall(request).execute()) {
+		try (Response response = OkHttpClient.newCall(request).execute()) {
 	
 			code = gson.fromJson(response.body().string(), AccessCode.class);
 			
