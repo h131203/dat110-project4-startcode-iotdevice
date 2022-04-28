@@ -1,0 +1,111 @@
+// C++ code
+//
+void setup()
+{
+ 
+  pinMode(2, INPUT); //høyre knapp
+  pinMode(4, INPUT); //venstre knapp
+  pinMode(13, INPUT); //PIR input
+  
+  pinMode(7, OUTPUT); //grønn
+  pinMode(8, OUTPUT); //gul
+  pinMode(12, OUTPUT); //rød
+  
+
+}
+
+int pushhandled = 0;
+int button_left = 0;
+int button_right = 0;
+int state = 0; //0= låst, 1= venter, 2= åpen
+int pir = 0;
+int code= 3;
+int kodesjekk1= 0;
+int kodesjekk2= 0;
+int input = 0;
+int teller = 0;
+
+void loop()
+{
+	//lese verdien av sensorer
+ 
+  
+  button_left = digitalRead(4);
+  button_right = digitalRead(2);
+  pir = digitalRead(13); //henter data fra PIR
+  
+  if (button_left == LOW){
+    pushhandled = 0;
+  }
+  if (button_right == LOW){
+    pushhandled = 0;
+  }
+  
+
+  
+  //utfører avhengig av tilstanden
+  //ved PIR deteksjon, skal gult lys slås på og rødt av
+  
+  switch (state) {
+    case 0: //låst
+   		digitalWrite(12, HIGH); //rødt på
+   		digitalWrite(8, LOW);
+   		digitalWrite(7, LOW);
+   		teller = 0;
+    	input= 0;
+   		kodesjekk1 = 0;
+   		kodesjekk2 = 0;
+    
+        if (pir == HIGH){
+          state = 1;
+        }
+    break;
+    
+    
+    case 1: //venter på input
+    digitalWrite(12, LOW); //rød av
+    digitalWrite(8, HIGH); //gul på
+  
+    
+
+    if ((button_left == HIGH)||(button_right == HIGH) && (!pushhandled)){
+      pushhandled = 1;
+      digitalWrite(8, LOW);
+      delay(500);
+      digitalWrite(8, HIGH);
+      teller++;
+      
+      if (teller > 1){
+        state = 0;
+        
+      }
+      
+      if ((button_left == HIGH)&& (pushhandled == 1)){
+        kodesjekk1 = 1; 
+        
+      } 
+      if (kodesjekk1==1) {
+            if ((button_right == HIGH)&& (pushhandled == 1)){
+            kodesjekk2 = 2;
+          }  
+        }
+       input =kodesjekk1+kodesjekk2;     
+       if (code == input){
+                  state = 2;
+       }  
+    } 
+    
+    break;
+    
+    case 2: //åpen
+   		digitalWrite(8, LOW); //gult av
+        digitalWrite(7, HIGH); //grønt lys på
+      	delay (2000);
+     	state = 0; //låser etter 2 sekund
+    	digitalWrite(7, LOW); //Skrur av det grønne lyset igjen 
+    break;
+  	}
+  
+  
+ 
+}
