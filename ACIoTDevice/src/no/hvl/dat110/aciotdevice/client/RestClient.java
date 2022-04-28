@@ -22,9 +22,7 @@ public class RestClient {
 	public void doPostAccessEntry(String message) {
 
 		// TODO: implement a HTTP POST on the service to post the message
-//		.... which is to issue a HTTP GET request on the cloud service in order to obtain the current access code. 
-//		This method will be called from the loop-function in the AccessController.java class 
-//		immediately before checking whether a provided access code is valid, i.e., in state CHECKING.
+
 		
 		//første test med OkHTTP
 		OkHttpClient okClient = new OkHttpClient();
@@ -54,7 +52,9 @@ public class RestClient {
 		AccessCode code = null;
 		
 		// TODO: implement a HTTP GET on the service to get current access code
-	
+//		.... which is to issue a HTTP GET request on the cloud service in order to obtain the current access code. 
+//		This method will be called from the loop-function in the AccessController.java class 
+//		immediately before checking whether a provided access code is valid, i.e., in state CHECKING.
 		//TEST 1
 		
 		OkHttpClient okClient = new OkHttpClient();
